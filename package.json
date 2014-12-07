@@ -31,9 +31,8 @@
     "prepublish": "npm run build",
     "size": "npm run build && cat id3.min.js | gzip | wc -c",
     "start": "node ./bin/cmd.js",
-    "test": "node ./bin/test.js",
+    "test": "tape test/*.js",
     "test-browser": "zuul -- test/basic.js",
-    "test-browser-local": "zuul --local -- test/basic.js",
-    "test-node": "tape test/*.js"
+    "test-browser-local": "zuul --local -- test/basic.js"
   }
 }
