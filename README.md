@@ -9,9 +9,10 @@ AJAX
 ```html
 <script src="id3.min.js"></script>
 <script type="text/javascript">
-id3('/audio/track.mp3', function(err, tags) {
-	// tags now contains v1, v2 and merged tags
-});
+var id3 = new ID3()
+id3.read('/audio/track.mp3', function (err, tags) {
+  // tags now contains v1, v2 and merged tags
+})
 </script>
 ```
 
@@ -20,7 +21,7 @@ Here the MP3 is being requested by partial AJAX requests, such that only the ID3
 Local Files
 ===
 
-First, install **id3.js** using NPM, the Node package manager.
+First, install **id3js** using NPM, the Node package manager.
 
 ```
 npm install id3js
@@ -29,14 +30,15 @@ npm install id3js
 Then use it like so:
 
 ```javascript
-var id3 = require('id3js');
+var ID3 = require('id3js')
 
-id3({ file: './track.mp3', type: id3.OPEN_LOCAL }, function(err, tags) {
-	// tags now contains your ID3 tags
-});
+var id3 = new ID3()
+id3.read('./track.mp3', function (err, tags) {
+  // tags now contains your ID3 tags
+})
 ```
 
-Note that here, the type is set to 'local' directly so that **id3.js** will attempt to read from the local file-system using `fs`.
+Note that here, the file type is implicitly set to 'local' so that **id3.js** will attempt to read from the local file-system using `fs`.
 
 This will **only work under NodeJS**.
 
@@ -46,10 +48,11 @@ File API (HTML5)
 ```html
 <script src="id3.min.js"></script>
 <script type="text/javascript">
-document.querySelector('input[type="file"]').onchange = function(e) {
-	id3(this.files[0], function(err, tags) {
-		// tags now contains your ID3 tags
-	});
+document.querySelector('input[type="file"]').onchange = function (e) {
+  var id3 = new ID3()
+  id3.read(this.files[0], function (err, tags) {
+    // tags now contains your ID3 tags
+  })
 }
 </script>
 ```
@@ -63,24 +66,24 @@ Tags are passed as an object of the following format:
 
 ```json
 {
-	"artist": "Song artist",
-	"title": "Song name",
-	"album": "Song album",
-	"year": "2013",
-	"v1": {
-		"title": "ID3v1 title",
-		"artist": "ID3v1 artist",
-		"album": "ID3v1 album",
-		"year": "ID3v1 year",
-		"comment": "ID3v1 comment",
-		"track": "ID3v1 track (e.g. 02)",
-		"version": 1.0
-	},
-	"v2": {
-		"artist": "ID3v2 artist",
-		"album": "ID3v2 album",
-		"version": [4, 0]
-	}
+  "artist": "Song artist",
+  "title": "Song name",
+  "album": "Song album",
+  "year": "2013",
+  "v1": {
+    "title": "ID3v1 title",
+    "artist": "ID3v1 artist",
+    "album": "ID3v1 album",
+    "year": "ID3v1 year",
+    "comment": "ID3v1 comment",
+    "track": "ID3v1 track (e.g. 02)",
+    "version": 1.0
+  },
+  "v2": {
+    "artist": "ID3v2 artist",
+    "album": "ID3v2 album",
+    "version": [4, 0]
+  }
 }
 ````
 
@@ -95,10 +98,10 @@ On occasion, an MP3 may have an image embedded in the ID3v2 tag. If this is the 
 
 ```json
 {
-	"type": "cover-front",
-	"mime": "image/jpeg",
-	"description": null,
-	"data": ArrayBuffer
+  "type": "cover-front",
+  "mime": "image/jpeg",
+  "description": null,
+  "data": ArrayBuffer
 }
 ```
 
